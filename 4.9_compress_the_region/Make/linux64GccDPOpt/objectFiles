@@ -1,0 +1,2 @@
+OBJECTS = \
+$(OBJECTS_DIR)/VAWT_Foam.o

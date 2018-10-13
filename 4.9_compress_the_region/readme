@@ -1,0 +1,10 @@
+MyFoam.C is the main file which contains PIMPLE loop.
+uEqn was added a new item "pointForce"
+pEqn stage the same.
+createFields.H create the field that are neccssary for this calculation.
+createLine.H create the actructor line of the vertical turbine.
+readDiskProperties read all the parameters saved in DiskProperties in case file.
+updataDiskForce update the force and distribute it onto the near cell.
+writeLineResult write the power and torque into a file named "thrustFile_"
+
+

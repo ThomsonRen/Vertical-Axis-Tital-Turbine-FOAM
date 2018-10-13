@@ -1,0 +1,55 @@
+IOdictionary DISKProperties
+(
+IOobject
+(
+    "DISKProperties",
+    runTime.time().constant(),
+    runTime,
+    IOobject::MUST_READ,
+    IOobject::NO_WRITE
+)
+);
+
+
+
+List<List<scalar> > AirfoilTable(DISKProperties.lookup("AirfoilTable"));
+
+vector TowingDirection(DISKProperties.lookup("TowingDirection"));
+vector ShaftNaxial(DISKProperties.lookup("ShaftNaxial"));
+vector Naxial(DISKProperties.lookup("Naxial"));
+vector Naxis_;
+Naxis_ = Naxial/mag(Naxial);
+Info <<"Normal vector of turbine plane is :"<< Naxis_ <<endl;
+
+scalar T2(readScalar(DISKProperties.lookup("T2")));//period of the turbine rotation
+scalar epsilon(readScalar(DISKProperties.lookup("epsilon")));//Gauss width
+scalar bladeNum(readScalar(DISKProperties.lookup("bladeNum")));
+scalar height(readScalar(DISKProperties.lookup("height")));//height of each blade
+scalar point_of_each_line(readScalar(DISKProperties.lookup("point_of_each_line")));//number of points on each line
+scalar bladeDiameter(readScalar(DISKProperties.lookup("bladeDiameter")));
+scalar chord(readScalar(DISKProperties.lookup("chord")));
+scalar initialPhase(readScalar(DISKProperties.lookup("initialPhase")));	
+scalar turbineCenter_x(readScalar(DISKProperties.lookup("turbineCenter_x")));
+scalar turbineCenter_y(readScalar(DISKProperties.lookup("turbineCenter_y")));
+scalar turbineCenter_z(readScalar(DISKProperties.lookup("turbineCenter_z")));
+scalar sphereRadius(readScalar(DISKProperties.lookup("sphereRadius")));
+
+vector turbineCenter(DISKProperties.lookup("turbineCenter"));
+  
+word outputControl = DISKProperties.subDict("globalProperties").lookupOrDefault<word>("outputControl","timeStep");
+Info<<"outputControlType :"<<outputControl<<endl;
+scalar outputInterval = DISKProperties.subDict("globalProperties").lookupOrDefault<scalar>("outputInterval",1);
+Info<<"outputInterval :"<<outputInterval<<endl;
+
+
+
+DynamicList<label> sphereCellsI;
+
+forAll(mesh.cells(),cellI)
+        {
+            if (mag(mesh.C()[cellI] - turbineCenter) <= sphereRadius)
+            {
+                sphereCellsI.append(cellI);
+            }
+        }
+
