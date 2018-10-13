@@ -1,0 +1,93 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.0.x                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version         2.0;
+    format          ascii;
+
+    root            "";
+    case            "";
+    instance        "";
+    local           "";
+
+    class           dictionary;
+    object          setFieldsABLDict;
+}
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+//#include        "../15000/include/initialConditions"
+
+// Extents of the domain.
+xMin                         0.0;
+yMin                         0.0;
+zMin                         0.0;
+
+xMax                      200.0;
+yMax                      100.0;
+zMax                      100.0;
+
+zRef                      100.0;//useless when regarding terrain
+
+// Specify if distance from wall should be used as z.
+useWallDistZ              false;
+scaleVelocityWithHeight   false;
+
+// Specify how to initialze the base velocity and temperature profile.
+//velocityInitType          "table";
+//velocityInitType          "log";
+velocityInitType          "geostrophic";
+
+
+// Maximum perturbation of streamwise/spanwise flow near surface.
+deltaU                    0.1;
+deltaV                    0.1;
+
+// Total periods of perturbations in streamwise/spanwise in the domain.
+Uperiods                  4.0;
+Vperiods                  4.0;
+
+// Percentage of domain height (zMax) where peak in perturbation 
+// magnitude occurs.
+zPeak                     0.3;
+
+// Initial height of the center of the capping inversion.
+zInversion                50.0;
+
+// Width of the capping inversion.
+widthInversion            100.0;
+
+
+// Geostrophic wind speed magnitude.
+Ug                        1.0;
+
+// Geostrophic wind speed direction.
+UgDir                     0.0;
+
+// Aerodynamic roughness height of surface.
+z0                        0.1;
+
+// von Karman constant.
+kappa                     0.4;
+
+// Vertical profile table.
+profileTable
+(
+//   z          U       V        
+(9.9999      6.144      0.13804  )
+
+);
+
+// Update internal field.
+updateInternalFields      true;
+
+// Update boundary field.
+updateBoundaryFields      true;
+
+// ************************************************************************* //
